@@ -10,6 +10,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Main {
+    static List<String> listPaths = new ArrayList<>();
+
     public static void main(String[] args) {
         GameProgress gameProgress1 = new GameProgress(200, 50, 1, 10.5);
         GameProgress gameProgress2 = new GameProgress(300, 60, 2, 12.5);
@@ -19,33 +21,16 @@ public class Main {
         saveGame("I://Games//savegames//save2.dat", gameProgress2);
         saveGame("I://Games//savegames//save3.dat", gameProgress3);
 
-        List<String> listPaths = new ArrayList<>();
         listPaths.add("I://Games//savegames//save1.dat");
         listPaths.add("I://Games//savegames//save2.dat");
         listPaths.add("I://Games//savegames//save3.dat");
 
         zipFiles("I://Games//savegames//zip.zip", listPaths);
 
-        File game1 = new File("I://Games//savegames//save1.dat");
-        File game2 = new File("I://Games//savegames//save2.dat");
-        File game3 = new File("I://Games//savegames//save3.dat");
+        for (String s : listPaths) {
+            deleteFile(s);
+        }
 
-        if (game1.delete())
-            System.out.println("Файл может быть удален");
-        else
-            System.out.println("Файл не может быть удален");
-        System.out.println();
-
-        if (game2.delete())
-            System.out.println("Файл может быть удален");
-        else
-            System.out.println("Файл не может быть удален");
-        System.out.println();
-
-        if (game3.delete())
-            System.out.println("Файл может быть удален");
-        else
-            System.out.println("Файл не может быть удален");
     }
 
     public static void saveGame(String path, GameProgress gameProgress) {
@@ -78,6 +63,16 @@ public class Main {
             System.out.println(ex.getMessage());
         }
 
+    }
+
+    public static void deleteFile(String path) {
+        File game = new File(path);
+
+        if (game.delete())
+            System.out.println("Файл может быть удален");
+        else
+            System.out.println("Файл не может быть удален");
+        System.out.println();
     }
 
 }
